@@ -1,19 +1,25 @@
 import React, { Component } from 'react';
-import logo from './arrow.jpg';
 import './App.css';
+import $ from "jquery";
+import Register from './Register.js';
+import TestPage from './TestPage.js';
+
 
 class App extends Component {
+  constructor(){
+    super();
+    this.state = {};
+  }
+  route(targetPage){
+    this.setState({ page: targetPage });
+  }
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome</h2>
-        </div>
-        <p className="App-intro">
-          
-          
-        </p>
+      <div classNameName="App">
+       <button onClick={()=>this.route("TestPage")}>Test</button>
+       <button onClick={()=>this.route("Register")}>Test</button>
+       {(this.state.page === "TestPage")? <TestPage/> : "" }
+       {(this.state.page === "Register")? <Register/> : "" }       
       </div>
     );
   }
