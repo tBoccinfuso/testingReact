@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import $ from "jquery";
+import {validateForm} from './javascript/ContactVal.js';
 
 class ContactUs extends Component{
     constructor(props) {
@@ -23,10 +24,10 @@ class ContactUs extends Component{
         this.setState({message: event.target.value});
       }
     handleSubmit(e){
-        
         e.preventDefault();
+        if(validateForm(this.state) === true){
         $.post("http://localhost:1245/contact", this.state);   
-        
+        }
     }
     render(){
         return(

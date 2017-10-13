@@ -8,7 +8,6 @@ export const validateForm = (form)=> {
      const phoneTxtbox = form.contactPhone;
      const password = form.password;
      const confirmPass = form.confirmPass;
-     
   //Phone  and Email number Regex
      const phoneRegex = new RegExp("[1]?[(| |-]?[2-9]{1}[0-9]{2}[)| |-]?[0-9]{3}[-| ]?[0-9]{4}");
      const emailRegex = new RegExp("[a-zA-Z0-9._-]+@{1}[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}");
@@ -16,6 +15,7 @@ export const validateForm = (form)=> {
      //Creating array for our possible error mesages.
      const errors = [];
   
+     const registerError = document.getElementById("registerError");
   
   //Check to see if the user left the First, Last, Email are empty. Display an error message as needed.
      if (!userName) {
@@ -34,32 +34,34 @@ export const validateForm = (form)=> {
      if (!lNameTxtbox) {
        errors.push({ field: lNameTxtbox, message: "Missing last name." });
      }
-     if (!emailTxtbox) {
-       errors.push({ field: emailTxtbox, message: "Enter an email address."});
-     } else {
-       if(emailTxtbox && !emailRegex.test(emailTxtbox)) {
-       errors.push({ field: emailTxtbox, message: "Invalid email address."});
+     if(!emailRegex.test(emailTxtbox)) {
+      errors.push({ field: emailTxtbox, message: "Invalid email address."});
        }
-     }
-     if (!phoneTxtbox) {
-       errors.push({ field: phoneTxtbox, message: "Enter a phone number."});
-     } else {
-       if(phoneTxtbox && !phoneRegex.test(phoneTxtbox)) {
+     if(!phoneRegex.test(phoneTxtbox)) {
        errors.push({ field: phoneTxtbox, message: "Invalid phone number."});
-       }
-     }
-  
-     if(errors.length > 0) {
-       errors.forEach( function(element) {
-         element.field.classList.add("error");
-       } );
-  
-         console.log(errors);
-         
-  
-         form.preventDefault();
-  
-     }
-     else {       
+    }
+     if (errors.length > 0){
+      
+     const tempArray = errors.reduce(function(output, element) {
+      if(output.indexOf(element.message) === -1) {
+        output.push(element.message);
+      }
+      return output;
+    }, []);
+    let message = "Please fill out all the required information: ";
+    message += "<ul>";
+    for(let i in tempArray) {
+      message += "\n";
+      message += "<li>"+ tempArray[i] +"</li>";
+    }
+    message += "</ul>";
+    
+    registerError.innerHTML = message; 
+    registerError.style.display = 'block';
+
+    return false;
+    }
+     else{
+      return true;
      }
   }

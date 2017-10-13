@@ -22,3 +22,15 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+/* Css file */
+
+.error {
+  border-color: rgb(255, 100, 100);
+  background-color: rgba(255, 200, 200, 1);
+}
+#contactError {
+  display: none;
+}
+
+
+

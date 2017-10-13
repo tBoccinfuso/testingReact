@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import $ from "jquery";
-//import {validateForm} from './javascript/RegisterVal.js';
+import {validateForm} from './javascript/RegisterVal.js';
 
 class Register extends Component {
   constructor(props) {
@@ -15,6 +15,7 @@ class Register extends Component {
       contactEmail: "",
       contactPhone: ""
     };
+
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -23,10 +24,13 @@ class Register extends Component {
     this.setState({[e.target.name]: e.target.value});    
   }
 
+  
   handleSubmit(e){
     e.preventDefault();
-    //validateForm(this.state);
-    $.post("http://localhost:1245/signup", this.state);    
+    if(validateForm(this.state) === true){
+      $.post("http://localhost:1245/signup", this.state); 
+    }
+       
   }
   render() {
     return (
@@ -47,9 +51,9 @@ class Register extends Component {
                     onChange={this.handleInputChange}/></label>         
                   </div>
                   <div className="row">
-                    <label htmlFor="contactEmail">Email: *<input type="text" id="contactEmail" name="contactEmail" placeholder="Contact Email" value={this.state.contactEmail}
+                    <label htmlFor="contactEmail">Email: *<input type="text" id="contactEmail" name="contactEmail"  value={this.state.contactEmail}
                     onChange={this.handleInputChange}/></label><br/>
-                    <label htmlFor="contactPhone">Phone: *<input type="text" id="contactPhone" name="contactPhone" placeholder="Contact Phone" value={this.state.contactPhone}
+                    <label htmlFor="contactPhone">Phone: *<input type="text" id="contactPhone" name="contactPhone"  value={this.state.contactPhone}
                     onChange={this.handleInputChange}/></label><br/>            
                   </div>              
               </section> 
